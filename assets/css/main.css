@@ -1,0 +1,22 @@
+ul {
+  width: 800px;
+  margin-bottom: 20px;
+  overflow: hidden;
+  border-top: 1px solid #ccc;
+}
+
+li {
+  line-height: 1.5em;
+  border-bottom: 1px solid #ccc;
+  float: left;
+  display: inline;
+  font-size: 20px;
+}
+
+#deck-list li {
+	width:25%;
+}
+
+.deck-info {
+	font-size: 20px;
+}
