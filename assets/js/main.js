@@ -14,7 +14,6 @@ function buildDeck() {
 	for(x = 0; x < suits.length; x++) {
 		for(y = 0; y < ranks.length; y++) {
 			card = {
-				id: guid(),
 				color: suits[x].color,
 				unicode: suits[x].unicode,
 				suit: suits[x].name,
@@ -36,14 +35,13 @@ $(document).on('click', '#deal-button', function() {
 
 //remove card onclick and replace with one from deck
 $(document).on('click', 'li', function() {
-	id = this.id;
 	allowed = false;
-	if (id.indexOf("Player1") >= 0) {
+	if ($(this).hasClass("Player1")) {
 		if (player1_swap > 0) {
 			player1_swap--;
 			allowed = true;
 		}
-	} else {
+	} else if ($(this).hasClass("Player2")) {
 		if (player2_swap > 0) {
 			player2_swap--;
 			allowed = true;
@@ -83,16 +81,16 @@ function displayDeck() {
 	//player1
 	for(x = 0; x < 5; x++) {
 		card_rank = /^[a-zA-Z()]+$/.test(deck[x].rank) ? deck[x].rank.substring(0,1) : deck[x].rank;
-		el = "<li id='Player1-" + deck[x].id + "' style='color:" + deck[x].color + "'>" +
+		el = "<li class='Player1' style='color:" + deck[x].color + "'>" +
 				"<span class='card-item'>" + deck[x].unicode + card_rank + "</li>";
 		$('#player-1').append(el);
 		deck.splice(x, 1);
 	}
 	shuffleDeck();
-	//player1
+	//player2
 	for(y = 0; y < 5; y++) {
 		card_rank2 = /^[a-zA-Z()]+$/.test(deck[y].rank) ? deck[y].rank.substring(0,1) : deck[y].rank;
-		el2 = "<li id='Player2-" + deck[y].id + "' style='color:" + deck[y].color + "'>" +
+		el2 = "<li class='Player2' style='color:" + deck[y].color + "'>" +
 				"<span class='card-item'>" + deck[y].unicode + card_rank2 + "</span></li>";
 		$('#player-2').append(el2);
 		deck.splice(y, 1);
@@ -105,21 +103,9 @@ function shuffle(array) {
 	while (0 !== currentIndex) {
 		randomIndex = Math.floor(Math.random() * currentIndex);
 		currentIndex -= 1;
-
 		temporaryValue = array[currentIndex];
 		array[currentIndex] = array[randomIndex];
 		array[randomIndex] = temporaryValue;
 	}
 	return array;
-}
-
-//generates random GUID
-function guid() {
-  function s4() {
-    return Math.floor((1 + Math.random()) * 0x10000)
-      .toString(16)
-      .substring(1);
-  }
-  return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
-    s4() + '-' + s4() + s4() + s4();
 }
