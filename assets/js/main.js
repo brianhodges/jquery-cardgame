@@ -34,17 +34,10 @@ $(document).on('click touchstart', '#deal-button', function() {
 	dealDeck();
 });
 
-if (typeof window.ontouchstart === 'undefined') {
-	$(document).on('click', '#player-1-complete', function() {
-		player1_swap = 0;
-		decideGameOver();
-	});
-} else {
-	$(document).on('touchstart', '#player-1-complete', function() {
-		player1_swap = 0;
-		decideGameOver();
-	});
-}
+$(document).on('click touchstart', '#player-1-complete', function() {
+	player1_swap = 0;
+	decideGameOver();
+});
 
 $(document).on('click touchstart', '#player-2-complete', function() {
 	player2_swap = 0;
