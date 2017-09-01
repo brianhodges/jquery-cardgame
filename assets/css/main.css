@@ -12,6 +12,8 @@ li {
   font-size: 30px;
 	width: 55px;
 	height: 75px;
+	border: 1px solid black;
+	border-radius: 5px;
 }
 
 .card-item {
@@ -25,12 +27,8 @@ li {
 
 li:hover {
 	cursor: pointer;
-	border: 1px solid black;
+	border: 3px solid black;
 	border-radius: 5px;
-}
-
-#deck-list li {
-	width:25%;
 }
 
 .deck-info {
