@@ -29,12 +29,22 @@ $(function() {
 	dealDeck();
 });
 
-$(document).on('click', '#deal-button', function() {
+$(document).on('click touchstart', '#deal-button', function() {
 	dealDeck();
 });
 
+$(document).on('click touchstart', '#player-1-complete', function() {
+	player1_swap = 0;
+	decideGameOver();
+});
+
+$(document).on('click touchstart', '#player-2-complete', function() {
+	player2_swap = 0;
+	decideGameOver();
+});
+
 //remove card onclick and replace with one from deck
-$(document).on('click', 'li', function() {
+$(document).on('click touchstart', 'li', function() {
 	allowed = false;
 	if ($(this).hasClass("Player1")) {
 		if (player1_swap > 0) {
@@ -53,9 +63,9 @@ $(document).on('click', 'li', function() {
 		$(this).html("<span class='card-item'>" + deck[0].unicode + card_rank + "</span>");
 		$(this).css('color', deck[0].color);
 		deck.splice(0, 1);
-		$('#player-1-swap').text(player1_swap);
-		$('#player-2-swap').text(player2_swap);
+		updateSwapCounts();
 	}
+	decideGameOver();
 });
 
 //clears current game, shuffles, and deals
@@ -64,7 +74,13 @@ function dealDeck() {
 	shuffleDeck();
 	$('#player-1').empty();
 	$('#player-2').empty();
+	updateSwapCounts();
+	$('#player-1-complete').show();
+	$('#player-2-complete').show();
 	displayDeck();
+}
+
+function updateSwapCounts() {
 	$('#player-1-swap').text(player1_swap);
 	$('#player-2-swap').text(player2_swap);
 }
@@ -95,6 +111,17 @@ function displayDeck() {
 		$('#player-2').append(el2);
 		deck.splice(y, 1);
 	}
+}
+
+//determine if players are done 
+function decideGameOver() {
+	updateSwapCounts();
+	if (player1_swap <= 0)
+		$('#player-1-complete').hide();
+	if (player2_swap <= 0)
+		$('#player-2-complete').hide();
+	if (player1_swap <= 0 && player2_swap <= 0)
+		alert('Game Over');
 }
 
 //shuffles array

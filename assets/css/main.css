@@ -1,4 +1,6 @@
 ul {
+	margin-top: 10px;
+	padding-top: 5px;
   width: 400px;
   margin-bottom: 20px;
   overflow: hidden;
@@ -10,8 +12,8 @@ li {
   float: left;
   display: inline;
   font-size: 30px;
-	width: 55px;
-	height: 75px;
+	width: 60px;
+	height: 80px;
 	border: 1px solid black;
 	border-radius: 5px;
 }
@@ -31,6 +33,10 @@ li:hover {
 	border-radius: 5px;
 }
 
-.deck-info {
+h1 {
+	font-size: 30px;
+}
+
+h3 {
 	font-size: 20px;
 }

@@ -4,19 +4,19 @@
 <head>
     <script src="./assets/js/jquery-3.2.1.min.js"></script>
     <script src="./assets/js/main.js"></script>
+    <link rel="stylesheet" href="./assets/css/bootstrap.css"/>
     <link rel="stylesheet" href="./assets/css/main.css"/>
     <title>jquery-cardgame</title>
 </head>
 <body>
-    Player 1:<ul id="player-1"></ul><br>
-    Player 2:<ul id="player-2"></ul>
-    <button type="button" id="deal-button">Deal</button>
-    
-    <p class="deck-info">
-        <strong>Player 1 Swap(s) Left:</strong>&nbsp;
-        <span id="player-1-swap"></span><br>
-        <strong>Player 2 Swap(s) Left:</strong>&nbsp;
-        <span id="player-2-swap"></span>
-    </p>
+    <h2>Player 1</h2>
+    <h3>Swap(s) Left: <span id="player-1-swap"></span></h3>
+    <button id="player-1-complete" class="btn btn-default">Done</button>
+    <ul id="player-1"></ul><br>
+    <h2>Player 2</h2>
+    <h3>Swap(s) Left: <span id="player-2-swap"></span></h3>
+    <button id="player-2-complete" class="btn btn-default">Done</button>
+    <ul id="player-2"></ul>
+    <button type="button" class="btn btn-success" id="deal-button">Deal</button>
 </body>
 </html>
