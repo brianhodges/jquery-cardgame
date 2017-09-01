@@ -58,7 +58,7 @@ $(document).on('click touchstart', 'li', function() {
 			allowed = true;
 		}
 	}
-	if (deck.length > 0 && allowed) {
+	if (allowed) {
 		shuffleDeck();
 		card_rank = /^[a-zA-Z()]+$/.test(deck[0].rank) ? deck[0].rank.substring(0,1) : deck[0].rank;
 		$(this).html("<span class='card-item'>" + deck[0].unicode + " " + card_rank + "</span>");
