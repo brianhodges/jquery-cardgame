@@ -1,5 +1,5 @@
 ul {
-  width: 800px;
+  width: 400px;
   margin-bottom: 20px;
   overflow: hidden;
   border-top: 1px solid #ccc;
@@ -7,10 +7,26 @@ ul {
 
 li {
   line-height: 1.5em;
-  border-bottom: 1px solid #ccc;
   float: left;
   display: inline;
-  font-size: 20px;
+  font-size: 30px;
+	width: 55px;
+	height: 75px;
+}
+
+.card-item {
+    vertical-align: middle;
+    height: 100%;
+    display: block;
+    line-height:30px;
+		text-align: center;
+		line-height:50px;
+}
+
+li:hover {
+	cursor: pointer;
+	border: 1px solid black;
+	border-radius: 5px;
 }
 
 #deck-list li {
