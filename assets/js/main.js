@@ -23,7 +23,7 @@ function buildDeck() {
 	}
 }
 
-//Events for Cards
+//Events for Game
 $(function() {
 	dealDeck();
 });
@@ -32,8 +32,16 @@ $(document).on('click', '#deal-button', function() {
 	dealDeck();
 });
 
+//remove card onclick and replace with one from deck
 $(document).on('click', 'li', function() {
-	console.log(this.id);
+	if (deck.length > 0) {
+		shuffleDeck();
+		var card_rank = /^[a-zA-Z()]+$/.test(deck[0].rank) ? deck[0].rank.substring(0,1) : deck[0].rank;
+		$(this).html("<span class='card-item'>" + deck[0].unicode + card_rank + "</span>");
+		$(this).css('color', deck[0].color);
+		deck.splice(0, 1);
+		$('#deck-size').text(deck.length);
+	}
 });
 
 //clears current game, shuffles, and deals
@@ -45,6 +53,7 @@ function dealDeck() {
 	displayDeck();
 }
 
+//shuffles the deck 10 times
 function shuffleDeck() {
 	for (i = 0; i < 10; i++) {
 		deck = shuffle(deck);
@@ -53,6 +62,7 @@ function shuffleDeck() {
 
 //displays current deck to list
 function displayDeck() {
+	//player1
 	for(x = 0; x < 5; x++) {
 		var card_rank = /^[a-zA-Z()]+$/.test(deck[x].rank) ? deck[x].rank.substring(0,1) : deck[x].rank;
 		var el = "<li id='" + deck[x].id + "' style='color:" + deck[x].color + "'>" +
@@ -61,6 +71,7 @@ function displayDeck() {
 		deck.splice(x, 1);
 	}
 	shuffleDeck();
+	//player1
 	for(y = 0; y < 5; y++) {
 		var card_rank2 = /^[a-zA-Z()]+$/.test(deck[y].rank) ? deck[y].rank.substring(0,1) : deck[y].rank;
 		var el2 = "<li id='" + deck[y].id + "' style='color:" + deck[y].color + "'>" +
