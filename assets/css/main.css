@@ -12,8 +12,8 @@ li {
   float: left;
   display: inline;
   font-size: 30px;
-	width: 60px;
-	height: 80px;
+	width: 70px;
+	height: 90px;
 	border: 1px solid black;
 	border-radius: 5px;
 }
@@ -39,4 +39,13 @@ h1 {
 
 h3 {
 	font-size: 20px;
+}
+
+.content {
+	width: 500px;
+}
+
+.btn-success {
+	float: right;
+	width: 100px;
 }

@@ -60,7 +60,7 @@ $(document).on('click touchstart', 'li', function() {
 	if (deck.length > 0 && allowed) {
 		shuffleDeck();
 		card_rank = /^[a-zA-Z()]+$/.test(deck[0].rank) ? deck[0].rank.substring(0,1) : deck[0].rank;
-		$(this).html("<span class='card-item'>" + deck[0].unicode + card_rank + "</span>");
+		$(this).html("<span class='card-item'>" + deck[0].unicode + " " + card_rank + "</span>");
 		$(this).css('color', deck[0].color);
 		deck.splice(0, 1);
 		updateSwapCounts();
@@ -98,7 +98,7 @@ function displayDeck() {
 	for(x = 0; x < 5; x++) {
 		card_rank = /^[a-zA-Z()]+$/.test(deck[x].rank) ? deck[x].rank.substring(0,1) : deck[x].rank;
 		el = "<li class='Player1' style='color:" + deck[x].color + "'>" +
-				"<span class='card-item'>" + deck[x].unicode + card_rank + "</li>";
+				"<span class='card-item'>" + deck[x].unicode + " " + card_rank + "</li>";
 		$('#player-1').append(el);
 		deck.splice(x, 1);
 	}
@@ -107,7 +107,7 @@ function displayDeck() {
 	for(y = 0; y < 5; y++) {
 		card_rank2 = /^[a-zA-Z()]+$/.test(deck[y].rank) ? deck[y].rank.substring(0,1) : deck[y].rank;
 		el2 = "<li class='Player2' style='color:" + deck[y].color + "'>" +
-				"<span class='card-item'>" + deck[y].unicode + card_rank2 + "</span></li>";
+				"<span class='card-item'>" + deck[y].unicode + " " + card_rank2 + "</span></li>";
 		$('#player-2').append(el2);
 		deck.splice(y, 1);
 	}
@@ -121,7 +121,33 @@ function decideGameOver() {
 	if (player2_swap <= 0)
 		$('#player-2-complete').hide();
 	if (player1_swap <= 0 && player2_swap <= 0)
-		alert('Game Over');
+		analyzePlayerHands();
+}
+
+function analyzePlayerHands() {
+	$('.Player1').each(function (i, obj) {
+		card_text = $(obj).text().toString();
+		card_pieces = card_text.split(' ');
+		unicode = (escape(card_pieces[0])).replace('%', '\\');
+		rank = card_pieces[1];
+		card = {
+			unicode: unicode,
+			rank: rank
+		};
+		console.log(card);
+	});
+	$('.Player2').each(function (i, obj) {
+		card_text = $(obj).text().toString();
+		card_pieces = card_text.split(' ');
+		unicode = (escape(card_pieces[0])).replace('%', '\\');
+		rank = card_pieces[1];
+		card = {
+			unicode: unicode,
+			rank: rank
+		};
+		console.log(card);
+	});
+	alert('Game Over');
 }
 
 //shuffles array
