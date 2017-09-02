@@ -1,19 +1,19 @@
 ul {
 	margin-top: 10px;
 	padding-top: 5px;
-  width: 400px;
-  margin-bottom: 20px;
-  overflow: hidden;
-  border-top: 1px solid #ccc;
+	width: 500px;
+	margin-bottom: 20px;
+	overflow: hidden;
+	border-top: 1px solid #ccc;
 }
 
 li {
-  line-height: 1.5em;
-  float: left;
-  display: inline;
-  font-size: 30px;
-	width: 70px;
-	height: 90px;
+	line-height: 1.5em;
+	float: left;
+	display: inline;
+	font-size: 30px;
+	width: 75px;
+	height: 95px;
 	border: 1px solid black;
 	border-radius: 5px;
 }
@@ -23,8 +23,8 @@ li {
     height: 100%;
     display: block;
     line-height:30px;
-		text-align: center;
-		line-height:50px;
+	text-align: center;
+	line-height:50px;
 }
 
 li:hover {
