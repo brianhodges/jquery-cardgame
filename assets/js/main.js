@@ -181,6 +181,7 @@ function evaluateHand(hand) {
 	score = 0;
 	if (isPair(hand)) { score = 2; }
 	if (isThree(hand)) { score = 3; }
+	if (isFour(hand)) { score = 4; }
 	return score;
 }
 
@@ -211,6 +212,16 @@ function isThree(hand) {
     if (hand[1].rank == hand[2].rank && hand[2].rank == hand[3].rank) { return true; }
     if (hand[1].rank == hand[2].rank && hand[2].rank == hand[4].rank) { return true; }
     if (hand[1].rank == hand[3].rank && hand[3].rank == hand[4].rank) { return true; }
+    return false;
+}
+
+//four of a kind
+function isFour(hand) {
+    if (hand[0].rank == hand[1].rank && hand[1].rank == hand[2].rank && hand[2].rank == hand[3].rank) { return true; }
+    if (hand[0].rank == hand[1].rank && hand[1].rank == hand[2].rank && hand[2].rank == hand[4].rank) { return true; }
+    if (hand[0].rank == hand[1].rank && hand[1].rank == hand[3].rank && hand[3].rank == hand[4].rank) { return true; }
+    if (hand[0].rank == hand[2].rank && hand[2].rank == hand[3].rank && hand[3].rank == hand[4].rank) { return true; }
+    if (hand[1].rank == hand[2].rank && hand[2].rank == hand[3].rank && hand[3].rank == hand[4].rank) { return true; }
     return false;
 }
 
