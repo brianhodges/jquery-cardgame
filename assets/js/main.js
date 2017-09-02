@@ -151,6 +151,8 @@ function analyzePlayerHands() {
 	});
 	player1_score = evaluateHand(player1_hand);
 	player2_score = evaluateHand(player2_hand);
+	console.log(player1_score);
+	console.log(player2_score);
 	alert('Game Over');
 }
 
@@ -176,10 +178,40 @@ function getNumericalRank(input) {
 }
 
 function evaluateHand(hand) {
-	for (i = 0; i < hand.length; i++) {
-		console.log(hand[i]);
+	score = 0;
+	if (isPair(hand)) { score = 2; }
+	if (isThree(hand)) { score = 3; }
+	return score;
+}
+
+//pair
+function isPair(hand) {
+    var i;
+	var j;
+
+    for (i = 0; i < 4; i++) {
+        for (j = i + 1; j < 5; j++) {
+            if (hand[i].rank == hand[j].rank){
+                return true;
+            }
+		}
 	}
-	return 0;
+    return false;
+}
+
+//three of a kind
+function isThree(hand) {
+    if (hand[0].rank == hand[1].rank && hand[1].rank == hand[2].rank) { return true; }
+    if (hand[0].rank == hand[1].rank && hand[1].rank == hand[3].rank) { return true; }
+    if (hand[0].rank == hand[1].rank && hand[1].rank == hand[4].rank) { return true; }
+    if (hand[0].rank == hand[3].rank && hand[3].rank == hand[4].rank) { return true; }
+    if (hand[0].rank == hand[2].rank && hand[2].rank == hand[3].rank) { return true; }
+    if (hand[0].rank == hand[2].rank && hand[2].rank == hand[4].rank) { return true; }
+    if (hand[2].rank == hand[3].rank && hand[3].rank == hand[4].rank) { return true; }
+    if (hand[1].rank == hand[2].rank && hand[2].rank == hand[3].rank) { return true; }
+    if (hand[1].rank == hand[2].rank && hand[2].rank == hand[4].rank) { return true; }
+    if (hand[1].rank == hand[3].rank && hand[3].rank == hand[4].rank) { return true; }
+    return false;
 }
 
 //shuffles array
