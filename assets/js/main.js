@@ -131,7 +131,7 @@ function analyzePlayerHands() {
 		card_text = $(obj).text().toString();
 		card_pieces = card_text.split(' ');
 		unicode = (escape(card_pieces[0])).replace('%', '\\');
-		rank = card_pieces[1];
+		rank = getNumericalRank(card_pieces[1]);
 		card = {
 			unicode: unicode,
 			rank: rank
@@ -142,7 +142,7 @@ function analyzePlayerHands() {
 		card_text = $(obj).text().toString();
 		card_pieces = card_text.split(' ');
 		unicode = (escape(card_pieces[0])).replace('%', '\\');
-		rank = card_pieces[1];
+		rank = getNumericalRank(card_pieces[1]);
 		card = {
 			unicode: unicode,
 			rank: rank
@@ -154,10 +154,32 @@ function analyzePlayerHands() {
 	alert('Game Over');
 }
 
+function getNumericalRank(input) {
+	var rank;
+	switch (input) {
+		case "J":
+			rank = 11;
+			break;
+		case "Q":
+			rank = 12;
+			break;
+		case "K":
+			rank = 13;
+			break;
+		case "A":
+			rank = 14;
+			break;
+		default:
+			rank = parseInt(input);
+	}
+	return rank;
+}
+
 function evaluateHand(hand) {
 	for (i = 0; i < hand.length; i++) {
 		console.log(hand[i]);
 	}
+	return 0;
 }
 
 //shuffles array
