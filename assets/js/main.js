@@ -29,7 +29,6 @@ $(function() {
 	dealDeck();
 });
 
-
 $(document).on('click touchstart', '#deal-button', function() {
 	dealDeck();
 });
