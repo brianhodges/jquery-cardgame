@@ -126,6 +126,8 @@ function decideGameOver() {
 }
 
 function analyzePlayerHands() {
+	player1_hand = [];
+	player2_hand = [];
 	$('.Player1').each(function (i, obj) {
 		card_text = $(obj).text().toString();
 		card_pieces = card_text.split(' ');
@@ -135,7 +137,7 @@ function analyzePlayerHands() {
 			unicode: unicode,
 			rank: rank
 		};
-		console.log(card);
+		player1_hand.push(card);
 	});
 	$('.Player2').each(function (i, obj) {
 		card_text = $(obj).text().toString();
@@ -146,9 +148,17 @@ function analyzePlayerHands() {
 			unicode: unicode,
 			rank: rank
 		};
-		console.log(card);
+		player2_hand.push(card);
 	});
+	player1_score = evaluateHand(player1_hand);
+	player2_score = evaluateHand(player2_hand);
 	alert('Game Over');
+}
+
+function evaluateHand(hand) {
+	for (i = 0; i < hand.length; i++) {
+		console.log(hand[i]);
+	}
 }
 
 //shuffles array
