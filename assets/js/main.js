@@ -116,12 +116,9 @@ function displayDeck() {
 //determine if players are done 
 function decideGameOver() {
 	updateSwapCounts();
-	if (player1_swap <= 0)
-		$('#player-1-complete').hide();
-	if (player2_swap <= 0)
-		$('#player-2-complete').hide();
-	if (player1_swap <= 0 && player2_swap <= 0)
-		analyzePlayerHands();
+	if (player1_swap <= 0) { $('#player-1-complete').hide(); }
+	if (player2_swap <= 0) { $('#player-2-complete').hide(); }
+	if (player1_swap <= 0 && player2_swap <= 0) { analyzePlayerHands(); }
 }
 
 function analyzePlayerHands() {
@@ -191,9 +188,7 @@ function evaluateHand(hand) {
 function search(hand, n) {
     var i;
     for (i = 0; i < 5; i++) {
-        if (hand[i].rank == n) {
-            return true;
-        }
+        if (hand[i].rank == n) { return true; }
     }
     return false;
 }
@@ -202,9 +197,7 @@ function search(hand, n) {
 function highCard(hand) {
 	var rank = 0;
 	for (i = 0; i < hand.length; i++) {
-		if (hand[i].rank > rank) {
-			rank = hand[i].rank;
-		}
+		if (hand[i].rank > rank) { rank = hand[i].rank; }
 	}
 	return rank;
 }
@@ -214,9 +207,7 @@ function isPair(hand) {
     var i, j;
     for (i = 0; i < 4; i++) {
         for (j = i + 1; j < 5; j++) {
-            if (hand[i].rank == hand[j].rank){
-                return true;
-            }
+            if (hand[i].rank == hand[j].rank) { return true; }
 		}
 	}
     return false;
@@ -260,11 +251,17 @@ function isTwoPair(hand) {
 //fullhouse
 function isFullHouse(hand) {
 	pairs = [];
+	success = true;
 	for (i = 0; i < hand.length; i++) {
 		pairs.push(hand[i].rank);
 	}
 	grouping = groupBy(pairs);
-	return (Object.keys(grouping).length == 2) ? true : false;
+	if (Object.keys(grouping).length == 2) {
+		Object.values(grouping).forEach(function(value) {
+			if (value < 2) { success = false; }
+		});
+	} else { success = false; }
+	return success;
 }
 
 //flush - all same suit
@@ -272,9 +269,7 @@ function isFlush(hand) {
     var i, suit;
     suit = hand[0].unicode;
     for (i = 1; i < 5; i++) {
-        if (hand[i].unicode != suit) {
-            return false;
-        }
+        if (hand[i].unicode != suit) { return false; }
 	}
     return true;
 }
@@ -284,16 +279,12 @@ function isStraight(hand) {
     var i, min;
 	min = 20;
     for (i = 0; i < 5; i++) {
-        if (hand[i].rank < min) {
-            min = hand[i].rank;
-        }
+        if (hand[i].rank < min) { min = hand[i].rank; }
 	}
     if (search(hand, min + 1)) {
         if (search(hand, min + 2)) {
             if (search(hand, min + 3)) {
-                if (search(hand, min + 4)) {
-                    return true;
-                }
+                if (search(hand, min + 4)) { return true; }
 			}
 		}
 	}
@@ -305,9 +296,7 @@ function isStraightFlush(hand) {
     var suit = hand[0].unicode;
     var i;
     for (i = 1; i < 5; i++) {
-        if (hand[i].unicode != suit) {
-            return false;
-        }
+        if (hand[i].unicode != suit) { return false; }
 	}
     return true;
 }
@@ -319,8 +308,6 @@ function isRoyal(hand) {
 }
 
 function determineWinner(player1_score, player2_score) {
-	console.log(player1_score);
-	console.log(player2_score);
 	if (player1_score > player2_score) {
 		alert("Player 1 Won with a " + scoreToString(player1_score));
 	} else if (player2_score > player1_score) {
