@@ -151,9 +151,7 @@ function analyzePlayerHands() {
 	});
 	player1_score = evaluateHand(player1_hand);
 	player2_score = evaluateHand(player2_hand);
-	console.log(player1_score);
-	console.log(player2_score);
-	alert('Game Over');
+	determineWinner(player1_score, player2_score);
 }
 
 function getNumericalRank(input) {
@@ -180,15 +178,38 @@ function getNumericalRank(input) {
 function evaluateHand(hand) {
 	score = 0;
 	if (isPair(hand)) { score = 2; }
-	if (isThree(hand)) { score = 3; }
-	if (isFour(hand)) { score = 4; }
+	if (isThree(hand)) { score = 4; }
+	if (isFour(hand)) { score = 8; }
+	if (isFlush(hand)) { score = 6; }
+	if (isStraight(hand)) { score = (isStraightFlush(hand)) ? ((isRoyal(hand)) ? 10: 9) : 5; }
 	return score;
+}
+
+//search hand
+function search(hand, n) {
+    var i;
+    for (i = 0; i < 5; i++) {
+        if (hand[i].rank == n) {
+            return true;
+        }
+    }
+    return false;
+}
+
+//high card
+function highCard(hand) {
+	var rank = 0;
+	for (i = 0; i < hand.length; i++) {
+		if (hand[i].rank > rank) {
+			rank = hand[i].rank;
+		}
+	}
+	return rank;
 }
 
 //pair
 function isPair(hand) {
-    var i;
-	var j;
+    var i, j;
 
     for (i = 0; i < 4; i++) {
         for (j = i + 1; j < 5; j++) {
@@ -223,6 +244,107 @@ function isFour(hand) {
     if (hand[0].rank == hand[2].rank && hand[2].rank == hand[3].rank && hand[3].rank == hand[4].rank) { return true; }
     if (hand[1].rank == hand[2].rank && hand[2].rank == hand[3].rank && hand[3].rank == hand[4].rank) { return true; }
     return false;
+}
+
+//two pair
+
+//fullhouse
+
+//flush - all same suit
+function isFlush(hand) {
+    var i, suit;
+    suit = hand[0].unicode;
+
+    for(i = 1; i < 5; i++) {
+        if (hand[i].unicode != suit) {
+            return false;
+        }
+	}
+    return true;
+}
+
+//straight - ranks chronological
+function isStraight(hand) {
+    var i, min;
+	min = 20;
+
+    for (i = 0; i < 5; i++) {
+        if (hand[i].rank < min) {
+            min = hand[i].rank;
+        }
+	}
+	
+    if (search(hand, min + 1)) {
+        if (search(hand, min + 2)) {
+            if (search(hand, min + 3)) {
+                if (search(hand, min + 4)) {
+                    return true;
+                }
+			}
+		}
+	}
+    return false;
+}
+
+//straight flush - ranks chronological and same suit
+function isStraightFlush(hand) {
+    var suit = hand[0].unicode;
+    var i;
+    for (i = 1; i < 5; i++) {
+        if (hand[i].unicode != suit) {
+            return false;
+        }
+	}
+    return true;
+}
+
+//straight flush but with Ace, King, Queen, Jack, 10
+function isRoyal(hand) {
+    if (search(hand, 14)) {
+        return true;
+    }
+    return false;
+}
+
+function determineWinner(player1_score, player2_score) {
+	console.log(player1_score);
+	console.log(player2_score);
+	if (player1_score > player2_score) {
+		alert("Player 1 Won with a " + scoreToString(player1_score));
+	} else if (player2_score > player1_score) {
+		alert("Player 2 Won with a " + scoreToString(player2_score));
+	} else {
+		player1_highcard = highCard(player1_hand);
+		player2_highcard = highCard(player2_hand);
+		if (player1_highcard > player2_highcard) {
+			alert("Player 1 Won with a " + scoreToString(player1_score));
+		} else if (player2_highcard > player1_highcard) {
+			alert("Player 2 Won with a " + scoreToString(player2_score));
+		} else {
+			alert("Draw");
+		}
+	}
+}
+
+function scoreToString(score) {
+	switch (score) {
+		case 2:
+			return "Pair";
+		case 4:
+			return "Three Of A Kind";
+		case 5:
+			return "Straight";
+		case 6:
+			return "Flush";
+		case 8:
+			return "Four Of A Kind";
+		case 9:
+			return "Straight Flush";
+		case 10:
+			return "Royal Flush";
+		default:
+			return "High Card";
+	}
 }
 
 //shuffles array
