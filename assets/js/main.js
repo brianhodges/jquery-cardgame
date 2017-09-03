@@ -1,7 +1,7 @@
 //Build a standard deck of cards
 function buildDeck() {
 	deck = [];
-	player1_swap = 3;
+	player1_swap = 50;
 	player2_swap = 3;
 	suits = [
 		{ name: "Spades", unicode: "\u2664", color: "black" },
@@ -178,10 +178,12 @@ function getNumericalRank(input) {
 function evaluateHand(hand) {
 	score = 0;
 	if (isPair(hand)) { score = 2; }
+	if (isTwoPair(hand)) { score = 3; }
 	if (isThree(hand)) { score = 4; }
 	if (isFour(hand)) { score = 8; }
 	if (isFlush(hand)) { score = 6; }
-	if (isStraight(hand)) { score = (isStraightFlush(hand)) ? ((isRoyal(hand)) ? 10: 9) : 5; }
+	if (isFullHouse(hand)) { score = 7; }
+	if (isStraight(hand)) { score = (isStraightFlush(hand)) ? ((isRoyal(hand)) ? 10 : 9) : 5; }
 	return score;
 }
 
@@ -210,7 +212,6 @@ function highCard(hand) {
 //pair
 function isPair(hand) {
     var i, j;
-
     for (i = 0; i < 4; i++) {
         for (j = i + 1; j < 5; j++) {
             if (hand[i].rank == hand[j].rank){
@@ -247,15 +248,30 @@ function isFour(hand) {
 }
 
 //two pair
+function isTwoPair(hand) {
+	pairs = [];
+	for (i = 0; i < hand.length; i++) {
+		pairs.push(hand[i].rank);
+	}
+	grouping = groupBy(pairs);
+	return (Object.keys(grouping).length == 3) ? true : false;
+}
 
 //fullhouse
+function isFullHouse(hand) {
+	pairs = [];
+	for (i = 0; i < hand.length; i++) {
+		pairs.push(hand[i].rank);
+	}
+	grouping = groupBy(pairs);
+	return (Object.keys(grouping).length == 2) ? true : false;
+}
 
 //flush - all same suit
 function isFlush(hand) {
     var i, suit;
     suit = hand[0].unicode;
-
-    for(i = 1; i < 5; i++) {
+    for (i = 1; i < 5; i++) {
         if (hand[i].unicode != suit) {
             return false;
         }
@@ -267,13 +283,11 @@ function isFlush(hand) {
 function isStraight(hand) {
     var i, min;
 	min = 20;
-
     for (i = 0; i < 5; i++) {
         if (hand[i].rank < min) {
             min = hand[i].rank;
         }
 	}
-	
     if (search(hand, min + 1)) {
         if (search(hand, min + 2)) {
             if (search(hand, min + 3)) {
@@ -300,9 +314,7 @@ function isStraightFlush(hand) {
 
 //straight flush but with Ace, King, Queen, Jack, 10
 function isRoyal(hand) {
-    if (search(hand, 14)) {
-        return true;
-    }
+    if (search(hand, 14)) { return true; }
     return false;
 }
 
@@ -330,12 +342,16 @@ function scoreToString(score) {
 	switch (score) {
 		case 2:
 			return "Pair";
+		case 3:
+			return "Two Pair";
 		case 4:
 			return "Three Of A Kind";
 		case 5:
 			return "Straight";
 		case 6:
 			return "Flush";
+		case 7:
+			return "Full House";
 		case 8:
 			return "Four Of A Kind";
 		case 9:
@@ -345,6 +361,12 @@ function scoreToString(score) {
 		default:
 			return "High Card";
 	}
+}
+
+function groupBy(arr) {
+	var hist = {};
+	arr.map( function (a) { if (a in hist) hist[a] ++; else hist[a] = 1; } );
+	return hist;
 }
 
 //shuffles array
