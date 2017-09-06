@@ -1,7 +1,7 @@
 //Build a standard deck of cards
 function buildDeck() {
 	deck = [];
-	player1_swap = 50;
+	player1_swap = 3;
 	player2_swap = 3;
 	suits = [
 		{ name: "Spades", unicode: "\u2664", color: "black" },
@@ -125,8 +125,7 @@ function analyzePlayerHands() {
 	player1_hand = [];
 	player2_hand = [];
 	$('.Player1').each(function (i, obj) {
-		card_text = $(obj).text().toString();
-		card_pieces = card_text.split(' ');
+		card_pieces = $(obj).text().toString().split(' ');
 		unicode = (escape(card_pieces[0])).replace('%', '\\');
 		rank = getNumericalRank(card_pieces[1]);
 		card = {
@@ -136,8 +135,7 @@ function analyzePlayerHands() {
 		player1_hand.push(card);
 	});
 	$('.Player2').each(function (i, obj) {
-		card_text = $(obj).text().toString();
-		card_pieces = card_text.split(' ');
+		card_pieces = $(obj).text().toString().split(' ');
 		unicode = (escape(card_pieces[0])).replace('%', '\\');
 		rank = getNumericalRank(card_pieces[1]);
 		card = {
