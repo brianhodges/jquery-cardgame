@@ -72,11 +72,9 @@ $(document).on('click touchstart', 'li', function() {
 function dealDeck() {
 	buildDeck();
 	shuffleDeck();
-	$('#player-1').empty();
-	$('#player-2').empty();
+	$('#player-1, #player-2').empty();
 	updateSwapCounts();
-	$('#player-1-complete').show();
-	$('#player-2-complete').show();
+	$('#player-1-complete, #player-2-complete').show();
 	displayDeck();
 }
 
@@ -152,20 +150,11 @@ function analyzePlayerHands() {
 function getNumericalRank(input) {
 	var rank;
 	switch (input) {
-		case "J":
-			rank = 11;
-			break;
-		case "Q":
-			rank = 12;
-			break;
-		case "K":
-			rank = 13;
-			break;
-		case "A":
-			rank = 14;
-			break;
-		default:
-			rank = parseInt(input);
+		case "J": rank = 11; break;
+		case "Q": rank = 12; break;
+		case "K": rank = 13; break;
+		case "A": rank = 14; break;
+		default: rank = parseInt(input);
 	}
 	return rank;
 }
@@ -325,26 +314,16 @@ function determineWinner(player1_score, player2_score) {
 
 function scoreToString(score) {
 	switch (score) {
-		case 2:
-			return "Pair";
-		case 3:
-			return "Two Pair";
-		case 4:
-			return "Three Of A Kind";
-		case 5:
-			return "Straight";
-		case 6:
-			return "Flush";
-		case 7:
-			return "Full House";
-		case 8:
-			return "Four Of A Kind";
-		case 9:
-			return "Straight Flush";
-		case 10:
-			return "Royal Flush";
-		default:
-			return "High Card";
+		case 2: return "Pair";
+		case 3: return "Two Pair";
+		case 4: return "Three Of A Kind";
+		case 5: return "Straight";
+		case 6: return "Flush";
+		case 7: return "Full House";
+		case 8: return "Four Of A Kind";
+		case 9: return "Straight Flush";
+		case 10: return "Royal Flush";
+		default: return "High Card";
 	}
 }
 
